@@ -5,14 +5,40 @@
     <meta charset="UTF-8">
     <title>form</title>
     <style>
-    fieldset{
-        border-radius: 2%;
-    }
+        fieldset {
+            border-radius: 2%;
+        }
     </style>
+
+    <script>
+        //抓取頁面元素
+        function GetElement(name) {
+            return document.getElementById(name);
+        }
+        //判斷
+        function ButtonSubmit() {
+            //抓取頁面上的checkboc1，取得是否checked
+            var isChecked = GetElement('agreePri').checked;
+            //如果是，就return true
+            if (isChecked) return true;
+            alert('必須勾選同意')
+            return false;
+        }
+        //當網頁載入完成後執行
+        window.onload = function () {
+            //hook event(在form1被submit時...)
+            GetElement('form1').onsubmit = function () {
+                //呼叫 Button_Submit() 
+                return ButtonSubmit();
+            };
+        };
+    </script>
 </head>
 
 <body>
-    <form action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=thpss88321@gmail.com&redirect=http://www.google.com" method="POST">
+    <form id="form1"
+        action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=thpss88321@gmail.com&redirect=http://www.google.com"
+        method="POST">
         <fieldset>
             <legend>個人資料--必填</legend>
             <label>姓名:</label>
@@ -51,24 +77,25 @@
             <label>縣市:</label>
             <select name="city">
                 <option value="1" selected>台北</option>
-                <option value="2" >桃園</option>
-                <option value="3" >新竹</option>
-                <option value="4" >苗栗</option>
-                <option value="5" >台中</option>
-                <option value="6" >彰化</option>
-                <option value="7" >南投</option>
+                <option value="2">桃園</option>
+                <option value="3">新竹</option>
+                <option value="4">苗栗</option>
+                <option value="5">台中</option>
+                <option value="6">彰化</option>
+                <option value="7">南投</option>
             </select>
             <label>其他地址:</label>
             <input type="text" name="add">
             <br>
+
+            <input type="checkbox" name="agreePri" id="agreePri">
+            <label>同意使用個資</label>
 
         </fieldset>
 
 
         <button type="submit">送出</button>
         <button type="reset">清除</button>
-
-
     </form>
 </body>
 
