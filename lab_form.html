@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>form</title>
+    <style>
+    fieldset{
+        border-radius: 2%;
+    }
+    </style>
+</head>
+
+<body>
+    <form action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=thpss88321@gmail.com&redirect=http://www.google.com" method="POST">
+        <fieldset>
+            <legend>個人資料--必填</legend>
+            <label>姓名:</label>
+            <input type="text" name="name1" placeholder="你的名字">
+            <br>
+            <label>密碼:</label>
+            <input type="password" name="pswd" maxlength="8">
+            <br>
+            <label>性別:</label>
+            <input type="radio" name="gender" value="m">
+            <label>男</label>
+            <input type="radio" name="gender" value="f">
+            <label>女</label>
+            <br>
+        </fieldset>
+        <fieldset>
+            <legend>個人資料--興趣</legend>
+            <label>興趣</label>
+            <input type="checkbox" name="hobby" value="music">
+            <label>音樂</label>
+            <input type="checkbox" name="hobby" value="gym">
+            <label>運動</label>
+            <input type="checkbox" name="hobby" value="read">
+            <label>閱讀</label>
+            <input type="checkbox" name="hobby" value="movie">
+            <label>電影</label>
+            <br>
+            <label>專長:</label>
+            <textarea id="goodat" cols="40" rows="5"></textarea>
+        </fieldset>
+        <fieldset>
+            <legend>個人資料--地址</legend>
+            <label>郵遞區號:</label>
+            <input type="text" name="pp">
+            <br>
+            <label>縣市:</label>
+            <select name="city">
+                <option value="1" selected>台北</option>
+                <option value="2" >桃園</option>
+                <option value="3" >新竹</option>
+                <option value="4" >苗栗</option>
+                <option value="5" >台中</option>
+                <option value="6" >彰化</option>
+                <option value="7" >南投</option>
+            </select>
+            <label>其他地址:</label>
+            <input type="text" name="add">
+            <br>
+
+        </fieldset>
+
+
+        <button type="submit">送出</button>
+        <button type="reset">清除</button>
+
+
+    </form>
+</body>
+
+</html>
