@@ -3,23 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
     <title>BMI</title>
     <script>
-        
+
         function cal() {
             var uh = document.getElementById("userhight").value;
             var uw = document.getElementById("userweight").value;
-            var bmi = uw / (uh / 100 * uh / 100);
-            document.getElementById("bmiresult").innerText = bmi;
-        }
-        
-        /*document.getElementById(calresult).onsubmit = function () {
-            var uh = document.getElementById(userhight).value;
-            var uw = document.getElementById(userhight).value;
-            var bmi = uw / (uh / 100 * uh / 100);
-            document.getElementById(bmiresult).innerText = "bmi";
 
-        }*/
+            document.getElementById("bmiresult").innerText = uw / (uh / 100 * uh / 100);
+        }
 
 
     </script>
@@ -27,16 +30,35 @@
 </head>
 
 <body>
-    <form id="calresult" method="dialog">
-        <label>身高：</label>
-        <input type="number" placeholder="請輸入身高" id="userhight"  >
-        <label>體重：</label>
-        <input type="number" placeholder="請輸入體重" id="userweight" >
-        <br>
-        <label>結果：</label>
-        <label id="bmiresult"></label>
-        <button type="submit" onclick="cal()">計算</button>
-    </form>
+    <div class="container">
+        <div class="row">
+
+            <form id="calresult" method="dialog" class="form-group">
+                <div class="col">
+                    <label>身高：</label>
+                    <br>
+                    <input type="number" class="form-control-file" placeholder="請輸入身高" id="userhight">
+                </div>
+
+                <div class="col">
+                    <label>體重：</label>
+                    <br>
+                    <input type="number" class="form-control-file" placeholder="請輸入體重" id="userweight">
+                </div>
+
+                <div class="col">
+                    <label>結果：</label>
+                    <label id="bmiresult"></label>
+                    <br>
+                    <button type="submit" class="btn btn-info" onclick="cal()">計算</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
 
 </body>
 
