@@ -52,64 +52,90 @@
             action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=thpss88321@gmail.com&redirect=http://www.google.com"
             method="POST">
             <div class="row">
-                <fieldset class="col">
-                    <legend class="card text-white bg-primary">個人資料--必填</legend>
-                    <label>姓名:</label>
-                    <input type="text" class="form-control" name="name1" placeholder="你的名字" required="required">
-                    <br>
-                    <label>密碼:</label>
-                    <input type="password" class="form-control" name="pswd" maxlength="8" required="required">
-                    <br>
-                    <label>性別:</label>
-                    <input type="radio" name="gender" value="m" required="required">
-                    <label>男</label>
-                    <input type="radio" name="gender" value="f">
-                    <label>女</label>
-                    <br>
-                </fieldset>
+                <div class="col">
+                    <div class="card">
+                        <div class="class-header text-white bg-primary">
+                            <legend>個人資料--必填</legend>
+                        </div>
+                        <div class="card-body">
+                            <fieldset>
 
-
-                <fieldset class="col">
-                    <legend class="card text-white bg-primary">個人資料--興趣</legend>
-                    <label>興趣</label>
-                    <input type="checkbox" name="hobby" value="music">
-                    <label>音樂</label>
-                    <input type="checkbox" name="hobby" value="gym">
-                    <label>運動</label>
-                    <input type="checkbox" name="hobby" value="read">
-                    <label>閱讀</label>
-                    <input type="checkbox" name="hobby" value="movie">
-                    <label>電影</label>
-                    <br>
-                    <label>專長:</label>
-                    <textarea id="goodat" cols="40" rows="5" class="form-control"></textarea>
-                </fieldset>
+                                <label>姓名:</label>
+                                <input type="text" class="form-control" name="name1" placeholder="你的名字"
+                                    required="required">
+                                <br>
+                                <label>密碼:</label>
+                                <input type="password" class="form-control" name="pswd" maxlength="8"
+                                    required="required">
+                                <br>
+                                <label>性別:</label>
+                                <input type="radio" name="gender" value="m" required="required">
+                                <label>男</label>
+                                <input type="radio" name="gender" value="f">
+                                <label>女</label>
+                                <br>
+                        </div>
+                    </div>
+                    </fieldset>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="class-header text-white bg-primary">
+                            <legend>個人資料--興趣</legend>
+                        </div>
+                        <div class="card-body">
+                            <fieldset class="card-body">
+                                <label>興趣</label>
+                                <input type="checkbox" name="hobby" value="music">
+                                <label>音樂</label>
+                                <input type="checkbox" name="hobby" value="gym">
+                                <label>運動</label>
+                                <input type="checkbox" name="hobby" value="read">
+                                <label>閱讀</label>
+                                <input type="checkbox" name="hobby" value="movie">
+                                <label>電影</label>
+                                <br>
+                                <label>專長:</label>
+                                <textarea id="goodat" cols="40" rows="5" class="form-control"></textarea>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="row ">
-                <fieldset  class="col-md-6">
-                    <legend class="card text-white bg-primary">個人資料--地址</legend>
-                    <label>郵遞區號:</label>
-                    <input class="form-control" type="text" name="pp">
-                    <br>
-                    <label>縣市:</label>
-                    <select name="city">
-                        <option value="1" selected>台北</option>
-                        <option value="2">桃園</option>
-                        <option value="3">新竹</option>
-                        <option value="4">苗栗</option>
-                        <option value="5">台中</option>
-                        <option value="6">彰化</option>
-                        <option value="7">南投</option>
-                    </select>
-                    <label>其他地址:</label>
-                    <input class="form-control" type="text" name="add">
-                    <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="class-header text-white bg-primary">
+                            <legend>個人資料--地址</legend>
+                        </div>
+                        <div class="card-body">
+                            <fieldset>
+                                <legend class="text-white bg-primary"></legend>
+                                <label>郵遞區號:</label>
+                                <input class="form-control" type="text" name="pp">
+                                <br>
+                                <label>縣市:</label>
+                                <select name="city">
+                                    <option value="1" selected>台北</option>
+                                    <option value="2">桃園</option>
+                                    <option value="3">新竹</option>
+                                    <option value="4">苗栗</option>
+                                    <option value="5">台中</option>
+                                    <option value="6">彰化</option>
+                                    <option value="7">南投</option>
+                                </select>
+                                <label>其他地址:</label>
+                                <input class="form-control" type="text" name="add">
+                                <br>
 
-                    <input type="checkbox" name="agreePri" id="agreePri">
-                    <label>同意使用個資</label>
+                                <input type="checkbox" name="agreePri" id="agreePri">
+                                <label>同意使用個資</label>
 
-                </fieldset>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
