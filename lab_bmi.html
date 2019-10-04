@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BMI</title>
+    <script>
+        
+        function cal() {
+            var uh = document.getElementById("userhight").value;
+            var uw = document.getElementById("userweight").value;
+            var bmi = uw / (uh / 100 * uh / 100);
+            document.getElementById("bmiresult").innerText = bmi;
+        }
+        
+        /*document.getElementById(calresult).onsubmit = function () {
+            var uh = document.getElementById(userhight).value;
+            var uw = document.getElementById(userhight).value;
+            var bmi = uw / (uh / 100 * uh / 100);
+            document.getElementById(bmiresult).innerText = "bmi";
+
+        }*/
+
+
+    </script>
+
+</head>
+
+<body>
+    <form id="calresult" method="dialog">
+        <label>身高：</label>
+        <input type="number" placeholder="請輸入身高" id="userhight"  >
+        <label>體重：</label>
+        <input type="number" placeholder="請輸入體重" id="userweight" >
+        <br>
+        <label>結果：</label>
+        <label id="bmiresult"></label>
+        <button type="submit" onclick="cal()">計算</button>
+    </form>
+
+</body>
+
+</html>
