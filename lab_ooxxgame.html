@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>OOXX GAME</title>
+    <meta charset="UTF-8">
+    <script>
+        var oorx = true;
+        function SetPoint(obj) {
+            
+            if (obj.innerText!="") {
+                
+            }
+            else if(oorx == true){
+                obj.innerText = "O";
+                oorx = false;
+            }
+            else {
+                obj.innerText = "X";
+                oorx = true;
+            }
+
+
+        }
+    </script>
+
+    <style>
+        .tdwidth {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="font-size: 80px;text-align: center">
+        <table border="2" style="height:500px ;width: 600px;">
+            <tr>
+                <td class="tdwidth" id="c1" onclick="SetPoint(document.getElementById('c1'))"></td>
+                <td class="tdwidth" id="c2" onclick="SetPoint(document.getElementById('c2'))"></td>
+                <td class="tdwidth" id="c3" onclick="SetPoint(document.getElementById('c3'))"></td>
+            </tr>
+            <tr>
+                <td class="tdwidth" id="c4" onclick="SetPoint(document.getElementById('c4'))"></td>
+                <td class="tdwidth" id="c5" onclick="SetPoint(document.getElementById('c5'))"></td>
+                <td class="tdwidth" id="c6" onclick="SetPoint(document.getElementById('c6'))"></td>
+            </tr>
+            <tr>
+                <td class="tdwidth" id="c7" onclick="SetPoint(document.getElementById('c7'))"></td>
+                <td class="tdwidth" id="c8" onclick="SetPoint(document.getElementById('c8'))"></td>
+                <td class="tdwidth" id="c9" onclick="SetPoint(document.getElementById('c9'))"></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>

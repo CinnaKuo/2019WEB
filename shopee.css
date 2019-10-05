@@ -1,0 +1,21 @@
+#navbar {
+  background-color: brown;
+  color: white;
+}
+
+#searchbar {
+  background-color: orangered;
+  text-align: center;
+  color: whitesmoke;
+  font-size: 48px;
+  position: relative;
+  height: 100px;
+}
+
+.bigArea {
+  position: absolute;
+  width: 80%;
+  height: 50%;
+  background-color: blueviolet;
+}
+/*# sourceMappingURL=shopee.css.map */

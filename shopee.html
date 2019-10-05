@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Document</title>
+    <style>
+        * {
+            font-family: Microsoft JhengHei;
+        }
+
+        img {
+            padding: 0%;
+        }
+
+        #navbar {
+            background-color: brown;
+            color: white;
+        }
+
+        #searchbar {
+            background-color: orangered;
+            text-align: center;
+            color: whitesmoke;
+            font-size: 48px ;
+            position: relative;
+            height: 100px ;
+        }
+
+        .rowflex {
+            display: flex;
+           /* border: 1px solid black;*/
+        }
+
+        .colflex {
+            display: flex;
+            flex-direction: column;
+            /* border: 1px solid black;*/
+        }
+
+        .flex50percent {
+            flex-grow: 1;
+               /* border: 1px solid black;*/
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .flex70percent {
+            flex-grow: 7;
+        }
+
+        .flex30percent {
+            flex-grow: 3;
+        }
+
+        #webBody {
+            width: 90%;
+            height: 500px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        #webBody2 {
+            width: 90%;
+            /*height: 180px;*/
+            margin: 0 auto;
+            padding: 10px;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .bgimg {
+            /*background-size:cover;*/
+            overflow: hidden;
+            background-repeat: repeat;
+        }
+
+        #bigimg {
+            background-image: url(https://sanrio-production-weblinc.netdna-ssl.com/media/W1siZiIsIjIwMTcvMDMvMjQvMjAvMjYvMzAvMjQ1L2NuX21pZGRsZS5wbmciXV0/cn_middle.png?sha=3b68277ec8704d7b);
+            margin: 5px;
+        }
+
+        #r1img {
+            background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVELUsR9RZlOkSjTLdAdq78eSAwP3BIvbcbQ9z1R5-DypBEox40w);
+            margin: 5px;
+        }
+
+        #r2img {
+            background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiHD1oh4Y-JKu_ENBVPiCXBzF_qOIzcH4AjUezILISuu15CjBUmg);
+            margin: 5px;
+        }
+
+        #items img {
+            border-radius: 50%;
+        }
+
+        #items>div {
+            text-align: center;
+            height: 0;
+            bottom: 20px;
+            margin-top: 20px;
+
+        }
+        #wB2items{
+            margin: 200px;
+        }
+
+        .w3-light-grey,
+        .w3-hover-light-grey:hover,
+        .w3-light-gray,
+        .w3-hover-light-gray:hover {
+            color: #000 !important;
+            background-color: #f1f1f1 !important
+        }
+
+        .w3-container:after,
+        .w3-container:before,
+        .w3-panel:after,
+        .w3-panel:before,
+        .w3-row:after,
+        .w3-row:before,
+        .w3-row-padding:after,
+        .w3-row-padding:before,
+        .w3-container,
+        .w3-panel {
+            padding: 0.01em 16px
+        }
+
+        .w3-panel {
+            margin-top: 16px;
+            margin-bottom: 16px
+        }
+
+        .w3-green,
+        .w3-hover-green:hover {
+            color: #fff !important;
+            background-color: #4CAF50 !important
+        }
+
+        .w3-hoverable tbody tr:hover,
+        .w3-ul.w3-hoverable li:hover {
+            background-color: #ccc
+        }
+
+        .w3-centered tr th,
+        .w3-centered tr td {
+            text-align: center
+        }
+
+        .w3-bar {
+            width: 100%;
+            overflow: hidden
+        }
+
+        .w3-center .w3-bar {
+            display: inline-block;
+            width: auto
+        }
+
+        .w3-bar-block.w3-center .w3-bar-item {
+            text-align: center
+        }
+
+        .w3-block {
+            display: block;
+            width: 100%
+        }
+
+        .w3-left-align {
+            text-align: left !important
+        }
+
+        .w3-right-align {
+            text-align: right !important
+        }
+
+        .w3-justify {
+            text-align: justify !important
+        }
+
+        .w3-center {
+            text-align: center !important
+        }
+    </style>
+</head>
+
+<body>
+    <div id=webtop>
+        <nav id="navbar">
+            <span>賣家中心</span>
+            <span>下載</span>
+            <span>追蹤我們</span>
+        </nav>
+        <div id="searchbar">
+            <span style="position: relative; top:20px">
+                <img src="data:image/png;base64,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"
+                    style="height: 40px;position: relative;">
+                蝦趴購物
+                <input type="text" value="" style="height: 30px;width: 360px;position:relative;bottom: 10px"
+                    placeholder="輸入搜尋文字">
+                <button style="position:relative;bottom: 5px">搜尋</button>
+            </span>
+
+        </div>
+    </div>
+    <div id=webBody class="colflex">
+        <div class="flex70percent rowflex">
+            <div id=bigimg class="flex50percent"> </div>
+            <div class="flex50percent colflex">
+                <div id=r1img class="flex50percent bgimg"></div>
+                <div id=r2img class="flex50percent bgimg"></div>
+            </div>
+
+        </div>
+
+        <div id=items class="flex30percent rowflex">
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+            <div class="flex50percent "> <img src="https://fakeimg.pl/80x80/?text=%E5%9C%96%E7%89%87&font=noto"> <br>交通
+            </div>
+        </div>
+
+    </div>
+    <div id="webBody2" class="rowflex">
+        <div class="flex50percent wB2items "> <img src="https://fakeimg.pl/150x120/?text=%E5%9C%96%E7%89%87&font=noto">
+            <br>$213
+            <div>
+                <div class="w3-light-grey">
+                    <div class="w3-container w3-green w3-center" style="width:25%">25%</div>
+                </div>
+            </div>
+        </div>
+        <div class="flex50percent wB2items "> <img src="https://fakeimg.pl/150x120/?text=%E5%9C%96%E7%89%87&font=noto">
+            <br>$213
+            <div>
+                <div class="w3-light-grey">
+                    <div class="w3-container w3-green w3-center" style="width:25%">25%</div>
+                </div>
+            </div>
+        </div>
+        <div class="flex50percent wB2items "> <img src="https://fakeimg.pl/150x120/?text=%E5%9C%96%E7%89%87&font=noto">
+            <br>$213
+            <div>
+                <div class="w3-light-grey">
+                    <div class="w3-container w3-green w3-center" style="width:25%">25%</div>
+                </div>
+            </div>
+        </div>
+        <div class="flex50percent wB2items "> <img src="https://fakeimg.pl/150x120/?text=%E5%9C%96%E7%89%87&font=noto">
+            <br>$213
+            <div>
+                <div class="w3-light-grey">
+                    <div class="w3-container w3-green w3-center" style="width:25%">25%</div>
+                </div>
+            </div>
+        </div>
+        <div class="flex50percent wB2items "> <img src="https://fakeimg.pl/150x120/?text=%E5%9C%96%E7%89%87&font=noto">
+            <br>$213
+            <div>
+                <div class="w3-light-grey">
+                    <div class="w3-container w3-green w3-center" style="width:25%">25%</div>
+                </div>
+            </div>
+        </div>
+        <div class="flex50percent wB2items "> <img src="https://fakeimg.pl/150x120/?text=%E5%9C%96%E7%89%87&font=noto">
+            <br>$213
+            <div>
+                <div class="w3-light-grey">
+                    <div class="w3-container w3-green w3-center" style="width:25%">25%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
