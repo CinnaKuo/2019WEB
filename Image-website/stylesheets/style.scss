@@ -203,3 +203,118 @@ nav{
     }
 }
 
+.page-footer{
+    padding: 48px 0px 20px;
+    background-color: #3d4143;
+    text-align: center;
+    color: #cfcfcf;
+    ul{
+        font-size: 18px;
+        display: flex;
+    }
+    a{
+        color: white;
+        display: block;
+        padding: 8px;
+    }
+    a:hover{
+        color: #cfcfcf;
+    }
+}
+
+.footer-menu{
+    margin-bottom: 20px;
+}
+
+.footer-content{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.footer-logo{
+    text-align: left;
+    font-size: 20px;
+    a:hover{
+        color: #ffffff;
+    }
+}
+
+@media screen and (max-width:1280px){
+    .container{
+      max-width: 940px;
+    }
+  }
+
+@media screen and (max-width:1026px){
+    .container{
+      max-width: 830px;
+    }
+    .story-content{
+        flex-direction: column;
+        align-items: center;
+    }
+    .story{
+        width: 100%;
+    }
+  }
+
+@media screen and (max-width:880px){
+    .container{
+      max-width: 600px;
+    }
+    .items{
+        flex-direction: column;
+    }
+    .item{
+        width: 90%;
+        margin: 10px;
+    }
+    .signup-content{
+        width: 100%;
+    }
+  }
+
+  @media screen and (max-width:767px){
+    .container{
+        min-width: 90%;
+    }
+    .header-menu{
+        display: block;
+        position: absolute;
+        background: #ffffff;
+        left: 0;
+        top: 100%;
+        border-bottom: 1px solid #dfdfdf;
+        padding: 8px 0;
+        li{
+            padding: 0 20px;
+        }
+    }
+    .menu-btn{
+        display: block;
+    }
+    .banner{
+        padding-top: 80px;
+    }
+    .footer-content{
+        flex-direction: column;
+    }
+    .footer-content ul{
+        margin-top: 20px;
+    }
+  }
+
+  @media screen and (max-width:640px){
+      .container{
+          width: 100%;
+      }
+      .story-img{
+          margin: 0px auto;
+          width: 90%;
+      }
+      .sign-form{
+          width: 100%;
+      }
+  }
+
