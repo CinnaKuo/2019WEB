@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <script>
+        // 對Date的擴充套件，將 Date 轉化為指定格式的String
+        // 月(M)、日(d)、小時(h)、分(m)、秒(s)、季度(q) 可以用 1-2 個佔位符，
+        // 年(y)可以用 1-4 個佔位符，毫秒(S)只能用 1 個佔位符(是 1-3 位的數字)
+        // 例子：
+        // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+        // (new Date()).Format("yyyy-M-d h:m:s.S")   ==> 2006-7-2 8:9:4.18
+        Date.prototype.Format = function (fmt) { //author: meizz 
+            var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+                "H+": this.getHours(), //小时 
+                "m+": this.getMinutes(), //分 
+                "s+": this.getSeconds(), //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds() //毫秒 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+    </script>
+    <script>
+
+        //啟動內容
+        var flag = true;
+
+        function clockTime() {
+            if (flag) {
+                var dd = new Date();
+                document.getElementById('clock').innerText = dd.Format("yyyy-MM-dd HH:mm:ss");
+                setTimeout(clockTime, 1000);
+            }
+
+        }
+        function start() {
+            flag = true;
+        }
+        function temp() {
+            flag = false;
+        }
+
+
+    </script>
+    <script>
+        function compute() {
+            var aa = document.getElementById('com').value;
+            document.getElementById('com2').innerHTML = eval(aa);
+        }
+
+
+
+    </script>
+
+    <script>
+        $(function () {
+
+            clickk();
+        })
+
+        function clickk() {
+            $('#buttons button').click(function (e) {
+                if ($(this).text() == "=") {
+                    $('#inputScreen').val(eval($('#inputScreen').val()));
+                }
+                else if ($(this).text() == "AC") {
+                    $('#inputScreen').val("");
+                }
+                else {
+                    $('#inputScreen').val($('#inputScreen').val() + $(this).text());
+                };
+            })
+                
+        }
+
+
+    </script>
+
+
+
+</head>
+
+<body>
+    <div style="text-align: center">
+        <label id="clock" style="font-family: clocktype;font-size: 150px">123</label>
+        <br>
+        <br>
+        <button onclick="start(),clockTime()">開始</button>
+        <button onclick="temp(),clockTime()">暫停</button>
+
+    </div>
+
+    <div>
+        <p>運算式</p>
+        <textarea id="com" cols='50' rows="5"></textarea>
+        <button onclick="compute()">運算</button>
+        <label id="com2"></label>
+    </div>
+
+    <div class="container">
+        <div class="row" style="margin-top: 50px ">
+            <div class="col-md-3"></div>
+            <div id="buttons" class="col-md-6">
+                <p>
+                    <input id="inputScreen" class="form-control" style="width: 180px" />
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">AC</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">(</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">)</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">/</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">7</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">8</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">9</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">*</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">4</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">5</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">6</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">-</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">1</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">2</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">3</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">+</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">0</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">.</button>
+                    <button type="button" class="btn btn-light rounded" style="width:90px;height:40px;">=</button>
+                </p>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>
