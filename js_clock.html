@@ -102,7 +102,7 @@
             if (flag2) {
                 $('#seco').val($('#seco').val() - 1);
                 if ($('#seco').val() == "0") {
-                    if ($('#minu').val() == "0"||$('#minu').val() == "") {
+                    if ($('#minu').val() == "0" || $('#minu').val() == "") {
                         flag2 = false;
                     }
                     else {
@@ -112,6 +112,49 @@
                 }
                 setTimeout(count, 1000);
             }
+        }
+
+    </script>
+    <!--翻譯機-->
+    <script>
+        function transfunc() {
+            var source=$("#text1").val();
+            $.ajax({
+                type: "post",//http verb
+                headers: {
+                    //http header
+                    "Ocp-Apim-Subscription-Key": "3df6c9a7db4945428454ca65f1125d74",
+                    "Content-Type": "application/json"
+                },
+                url: `https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en`,
+                data: JSON.stringify([{ "Text": source }]),//要翻譯的文字
+                dataType: "json",
+                success: function (response) {
+                    //呼叫遠端服務後的回傳結果
+                    $("#text2").val(response[0].translations[0].text);
+                }
+                //還可以繼續寫error
+            })
+        }
+
+        function retransfunc() {
+            var source=$("#text2").val();
+            $.ajax({
+                type: "post",//http verb
+                headers: {
+                    //http header
+                    "Ocp-Apim-Subscription-Key": "3df6c9a7db4945428454ca65f1125d74",
+                    "Content-Type": "application/json"
+                },
+                url: `https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=zh`,
+                data: JSON.stringify([{ "Text": source }]),//要翻譯的文字
+                dataType: "json",
+                success: function (response) {
+                    //呼叫遠端服務後的回傳結果
+                    $("#text1").val(response[0].translations[0].text);
+                }
+                //還可以繼續寫error
+            })
         }
 
     </script>
@@ -210,6 +253,32 @@
         <br>
         <br>
     </div>
+
+    <!--翻譯機-->
+    <div class="text-align: center container">
+        <div class="row">
+            <h1>翻譯機</h1>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>原始文字</p>
+                <textarea id="text1"></textarea>
+            </div>
+
+            <div class="col">
+                <button id="trans" onclick="transfunc()">=></button>
+                <button id="retrans" onclick="retransfunc()">
+                    <=</button> </div> <div class="col">
+                        <p>翻譯文字</p>
+                        <textarea id="text2"></textarea>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
 </body>
 
 
