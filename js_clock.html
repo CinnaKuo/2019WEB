@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <title>Document</title>
+    <!--datetime formate-->
     <script>
         // 對Date的擴充套件，將 Date 轉化為指定格式的String
         // 月(M)、日(d)、小時(h)、分(m)、秒(s)、季度(q) 可以用 1-2 個佔位符，
@@ -33,18 +34,15 @@
             return fmt;
         }
     </script>
+    <!--時鐘-->
     <script>
-
-        //啟動內容
         var flag = true;
-
         function clockTime() {
             if (flag) {
                 var dd = new Date();
                 document.getElementById('clock').innerText = dd.Format("yyyy-MM-dd HH:mm:ss");
                 setTimeout(clockTime, 1000);
             }
-
         }
         function start() {
             flag = true;
@@ -53,21 +51,17 @@
             flag = false;
         }
 
-
     </script>
+    <!--填入算式-->
     <script>
         function compute() {
             var aa = document.getElementById('com').value;
             document.getElementById('com2').innerHTML = eval(aa);
         }
-
-
-
     </script>
-
+    <!--計算機-->
     <script>
         $(function () {
-
             clickk();
         })
 
@@ -83,9 +77,42 @@
                     $('#inputScreen').val($('#inputScreen').val() + $(this).text());
                 };
             })
-                
+
         }
 
+
+    </script>
+    <!--碼表-->
+    <script>
+        var flag2 = true;
+        function cdSrart() {
+            flag2 = true;
+            count();
+        }
+        function cdStop() {
+            flag2 = false;
+            count();
+        }
+        function cdContinue() {
+            flag2 = true;
+            count();
+        }
+
+        function count() {
+            if (flag2) {
+                $('#seco').val($('#seco').val() - 1);
+                if ($('#seco').val() == "0") {
+                    if ($('#minu').val() == "0"||$('#minu').val() == "") {
+                        flag2 = false;
+                    }
+                    else {
+                        $('#minu').val($('#minu').val() - 1);
+                        $('#seco').val(60);
+                    }
+                }
+                setTimeout(count, 1000);
+            }
+        }
 
     </script>
 
@@ -94,6 +121,7 @@
 </head>
 
 <body>
+    <!--計時-->
     <div style="text-align: center">
         <label id="clock" style="font-family: clocktype;font-size: 150px">123</label>
         <br>
@@ -102,14 +130,14 @@
         <button onclick="temp(),clockTime()">暫停</button>
 
     </div>
-
-    <div>
+    <!--輸入算式-->
+    <div style="text-align: center">
         <p>運算式</p>
         <textarea id="com" cols='50' rows="5"></textarea>
         <button onclick="compute()">運算</button>
         <label id="com2"></label>
     </div>
-
+    <!--計算機-->
     <div class="container">
         <div class="row" style="margin-top: 50px ">
             <div class="col-md-3"></div>
@@ -169,6 +197,20 @@
         </div>
     </div>
 
+    <!--碼表-->
+    <div style="text-align: center">
+        <h1>碼表</h1>
+        <input id="minu"><span>分</span>
+        <input id="seco"><span>秒</span>
+        <br>
+        <br>
+        <button onclick="cdSrart()">開始</button>
+        <button onclick="cdStop()">暫停</button>
+        <button onclick="cdContinue()">繼續</button>
+        <br>
+        <br>
+    </div>
 </body>
+
 
 </html>
