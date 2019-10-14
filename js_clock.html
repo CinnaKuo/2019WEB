@@ -118,7 +118,9 @@
     <!--翻譯機-->
     <script>
         function transfunc() {
-            var source=$("#text1").val();
+            var source = $("#text1").val();
+
+            localStorage.setItem('lastTime', source);
             $.ajax({
                 type: "post",//http verb
                 headers: {
@@ -127,18 +129,32 @@
                     "Content-Type": "application/json"
                 },
                 url: `https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en`,
-                data: JSON.stringify([{ "Text": source }]),//要翻譯的文字
+                data: JSON.stringify([{ "Text": source }]),//將要翻譯的內容將json轉為text
+
                 dataType: "json",
                 success: function (response) {
                     //呼叫遠端服務後的回傳結果
+                    //AJAX這個物件的SUCCESS屬性指向一個FUNCTION
+                    //所以如果把這個做成一個function放到外面，裡面就會變成success:xxxxx(function名稱不加())
+                    //呼叫一個function 進而導到別的function叫做callback
                     $("#text2").val(response[0].translations[0].text);
                 }
                 //還可以繼續寫error
+
+
             })
+
         }
 
+
+
+        $(function () {
+
+            $('#text1').val(localStorage.getItem('lastTime'));
+        })
+
         function retransfunc() {
-            var source=$("#text2").val();
+            var source = $("#text2").val();
             $.ajax({
                 type: "post",//http verb
                 headers: {

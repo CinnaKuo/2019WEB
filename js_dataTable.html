@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--jquery引用-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!--jquery table的css引用-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!--jquery table的js引用-->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <!--bootstrape的css引用-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--bootstrape的js引用-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <title>Document</title>
+    <script>
+        //預設資料
+        var dat = [
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+        ];
+        $(document).ready(function () {
+            mytable1 = $('#table1').DataTable(
+                { data: dat } //data這個屬性值去抓dat的資料
+            );
+
+            //新增按鈕
+            $('#addBut').click(function (e) {
+                var addItem = [
+                    $("#addName").val(),
+                    $("#addBirth").val(),
+                    $("#addPhone").val(),
+                    $("#addEmail").val(),
+                    $("#addAdd").val()];
+                //清空頁面
+                $("#addName").val("");
+                $("#addBirth").val("");
+                $("#addPhone").val("");
+                $("#addEmail").val("");
+                $("#addAdd").val("")
+
+                //新增到資料庫
+                dat.push(addItem);
+                //更新頁面
+                SaveData();
+                LoadData();
+            });
+            //匯入按鈕
+            $('#ininin').click(function (e) {
+                let str = $('#field_DataJSON2').val();
+                dat = JSON.parse(str);
+
+                SaveData();
+                LoadData();
+
+            });
+            //匯出按鈕
+            $('#btnEx').click(function (e) {
+                var str = JSON.stringify(dat);
+                $('#field_DataJSON1').val(str);
+
+            });
+            $('#editBut').click(function (e) {
+                CurrentEditItem = mytable1.row(this).data();
+                
+
+            });
+            $('#delBut').click(function (e) {
+
+            });
+            //取得當前點選的資料
+            //參考: https://datatables.net/examples/advanced_init/events_live.html
+            $('#table1 tbody').on('click', 'tr', function () {
+
+                $("#addModal").modal();
+            });
+
+            LoadData()
+        });
+
+        function RefreshData() {
+            mytable1.clear(); //DataTable裡面的方法
+            mytable1.rows.add(dat);
+            mytable1.draw();
+        }
+        //儲存資料
+        function SaveData() {
+            var str = JSON.stringify(dat); //把dat資料json化
+            localStorage.setItem('AddressBook', str);//存到本機
+        }
+
+        //載入資料
+        function LoadData() {
+            if (localStorage.getItem('AddressBook') != null) {
+                var str = localStorage.getItem('AddressBook'); //拿到存進去的json資料
+                dat = JSON.parse(str);//轉成文字
+            }
+            RefreshData();
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <!--選單-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="text-align: center">
+        <a class="navbar-brand ml-4" href="#">個人通訊錄</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item  mr-2">
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addModal">新增</button>
+                </li>
+                <li class="nav-item ">
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ModalDataInport"
+                        id="btnIn">匯入</button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ModalDataExport"
+                        id="btnEx">匯出</button>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    </br>
+    </br>
+    <!--主要顯示區-->
+    <div class="container-fluid">
+        <div class="row" style="margin: 10px">
+            <div class="col-md-12">
+                <table id="table1" class="display">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>生日</th>
+                            <th>電話</th>
+                            <th>Email</th>
+                            <th>地址</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--新增的modal-->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">新增資料</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">姓名</label>
+                            <input type="email" class="form-control" id="addName" aria-describedby="Name"
+                                placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">生日</label>
+                            <input type="date" class="form-control" id="addBirth" placeholder="Birth">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">電話</label>
+                            <input type="number" class="form-control" id="addPhone" placeholder="Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Email</label>
+                            <input type="email" class=" form-control" id="addEmail" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">地址</label>
+                            <input type="text" class="form-control" id="addAdd" placeholder="Address">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="addBut">新增</button>
+                    <button type="button" class="btn btn-primary" id="addBut">刪除</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--匯出的modal-->
+    <div class="modal fade" id="ModalDataExport">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">資料匯出</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <textarea id="field_DataJSON1" class="form-control" cols="60" rows="10" readonly></textarea>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--匯入的modal-->
+    <div class="modal fade" id="ModalDataInport">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">資料匯入</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <textarea id="field_DataJSON2" class="form-control" cols="60" rows="10"></textarea>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="ininin">匯入</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--修改刪除的modal-->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">新增資料</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">姓名</label>
+                            <input type="email" class="form-control" id="addName" aria-describedby="Name"
+                                placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">生日</label>
+                            <input type="date" class="form-control" id="addBirth" placeholder="Birth">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">電話</label>
+                            <input type="number" class="form-control" id="addPhone" placeholder="Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Email</label>
+                            <input type="email" class=" form-control" id="addEmail" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">地址</label>
+                            <input type="text" class="form-control" id="addAdd" placeholder="Address">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="editBut">修改</button>
+                    <button type="button" class="btn btn-primary" id="delBut">刪除</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
