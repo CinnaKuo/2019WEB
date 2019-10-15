@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsd-l82hM3sesKEir5sdctGn4kP17ycm4&callback=initMap"
+        async defer></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var map;
+        $(function () {
+            //把UBIKE資料抓出來
+
+        });
+
+        /*function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 24.988094, lng: 121.4120598 },
+                zoom: 8
+            });
+        }*/
+
+        function initMap() {
+            map = new google.maps.Map(
+                document.getElementById('map'),
+                { center: new google.maps.LatLng(24.988094, 121.4120598), zoom: 16 });
+
+            var icons = {
+                ubike: {
+                    icon: './frog.png'
+                }
+            };
+
+            //自己+的
+            //取得ubike經緯度
+            var features = makeFunc();
+
+            // Create markers.
+            //
+            for (var i = 0; i < features.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: features[i].position,
+                    icon: icons[features[i].type].icon,
+                    map: map
+                });
+            };
+        }
+        function makeFunc() {
+            var data = [];
+            //呼叫opendata
+            var opendata = makeFunc2();
+            $.each(opendata.retVal, function (i, item) {
+                var singleitem = {
+                    position: new google.maps.LatLng(item.lat, item.lng),
+                    type: 'ubike'
+                };
+                data.push(singleitem);
+            });
+            return data;
+        }
+
+        /*原本的
+        var features = [
+            {
+                position: new google.maps.LatLng(24.988094, 121.4120598),
+                type: 'ubike'
+            }
+        ];*/
+
+        //拿到opendata的fuunc
+        function makeFunc2() {
+            var ubikeLoca;
+            $.ajax({
+                type: "GET",
+                url: 'https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json',
+                success: function (data) {
+                    ubikeLoca = data;
+                },
+                error: function () {
+                    alert("死吧");
+                },
+                async:false //非同步
+            });
+            //自己寫return
+            return ubikeLoca;
+        }
+    </script>
+</body>
+
+</html>
