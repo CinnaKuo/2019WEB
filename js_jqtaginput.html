@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--jquery引用-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!--jquery table的css引用-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!--jquery table的js引用-->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <!--jq tag input引用  https://cdnjs.com/libraries/jquery-tagsinput-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+
+    <title>Document</title>
+    <script>
+        $(function () {
+
+           // $('#tags').tagsInput({ width: 'auto' });
+           $('#tags').tagsInput();
+        });
+    </script>
+</head>
+<!--https://www.itread01.com/content/1546421528.html-->
+
+<body>
+    <!--
+    <div class="form-group">
+        <label for="tags">Tags</label>
+        <textarea class="form-control tagsinput" name="tags" id="tags" rows="10"></textarea>
+    </div>
+    -->
+    <input id="tags" type="text" class="tags" value="foo,bar,baz,roffle" />
+
+
+</body>
+
+</html>

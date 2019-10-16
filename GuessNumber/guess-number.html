@@ -140,12 +140,12 @@
   <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
   <script>
     window.onload = function () {
-      answerList = [];console.log(answerList);
-      
+      answerList = []; console.log(answerList);
+
       checkButton();
     }
     function createNum() {
-
+      answerList = [];
       answerList.push();
       for (i = 0; i < 4; i++) {
         var a = Math.floor(Math.random() * 10);
@@ -168,7 +168,7 @@
       var target = document.getElementById('guessResults');
       var newList = document.createElement("li");
       newList.setAttribute("class", "list-group-item");
-      newList.innerText = "答案是" + answerList;
+      newList.innerText = "答案是" + answerList[0] + answerList[1] + answerList[2] + answerList[3];
       target.appendChild(newList);
     }
     function doGuess() {
@@ -217,7 +217,7 @@
       target.appendChild(newList);
     }
     function checkButton() {
-      if (answerList.length ==0) {
+      if (answerList.length == 0) {
         document.getElementById('cheat').setAttribute('disabled', 'disabled');
         document.getElementById('guess').setAttribute('disabled', 'disabled');
         document.getElementById('restart').setAttribute('disabled', 'disabled');

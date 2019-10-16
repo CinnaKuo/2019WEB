@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--jquery引用-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!--bootstrape的css引用-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--bootstrape的js引用-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <title>Document</title>
+    <script>
+        $(function () {
+            console.log($('#TalkContainer')[0]);
+            console.log($('#TalkContainer'));
+            $('#ButtonSend').click(function (e) {
+                input = $('#inputText').val();
+                $.ajax({
+                    type: "post",
+                    headers: {
+                        "Authorization": "EndpointKey 1ab71375-c362-45c5-9970-d4792e608ee2",
+                        "Content-Type": "application/json"
+                    },
+                    url: " https://bsqalab.azurewebsites.net/qnamaker/knowledgebases/9e2fe783-2949-4aa6-99e5-61af667d685c/generateAnswer",
+                    data: JSON.stringify({ "question": input }),
+                    dataType: "json",
+                    success: function (ret) {
+                        //console.log(ret);
+                        //如果成功
+                        $('#TalkContainer').text = $('#TalkContainer').text(ret.answers[0].answer);
+                    }, error: function (err) {
+                        //如果有錯
+                        ('#TalkContainer').text = "無相對回應";
+                    }
+                });
+
+            });
+        })
+
+    </script>
+</head>
+
+<body>
+    <div class="row" style="margin: 10px">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <!-- 卡片  -->
+            <div class="card">
+                <!-- 卡片標題 -->
+                <span class="card-header bg-primary" style="color:white">
+                    對談機器人
+                </span>
+                <!-- 卡片內容 -->
+                <div class="card-body">
+                    <!-- 對談區 -->
+                    <div id="TalkContainer" style="overflow: auto; height: 300px;">
+                    </div>
+                </div>
+            </div>
+            <form class="form-inline">
+                <input id="inputText" class="form-control" style="width:88%">
+                <button type="button" id="ButtonSend" class="btn btn-primary">送出</button>
+            </form>
+        </div>
+        <div class="col-2"></div>
+</body>
+
+</html>
+
