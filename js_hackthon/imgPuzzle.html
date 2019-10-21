@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--jquery引用-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- bootstrap 4.3.1 -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--jquery table的css引用-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!--jquery table的js引用-->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <title>Image Puzzle</title>
+    <style>
+        .contain {
+            height: 480px;
+            width: 480px;
+            border: crimson 3px solid;
+            padding: 0px;
+        }
+
+        .pic {
+            width: 158px;
+            height: 158px;
+            border: solid 1px gray;
+            float: left;
+            overflow: hidden;
+        }
+
+        .pic1 {
+            margin-left: -160px;
+
+        }
+
+        .pic3 {
+            margin-top: -160px;
+
+        }
+    </style>
+
+    <script>
+        var divInd = [];
+        $(function () {
+            DivMaker();
+            Shuffle();
+            $(`#contain>div`).click(function (e) {
+                i = $("#contain>div").index($(this));
+                CheckBlank(i);
+
+            });
+        })
+
+        //劃出div,顯示九張
+        function DivMaker() {
+            for (i = 0; i < 9; i++) {
+                $("#contain").append(`<div class='pic' id='pic${i}'><img src="sanrio.jpg"></div>`);
+                $(`#pic${i} img`).css({ 'margin-left': `${(i % 3) * (-160)}px`, 'margin-top': `${(Math.floor(i / 3)) * (-160)}px` });
+                //物件陣列塞位置
+
+                divInd[i] = { col: i % 3, row: Math.floor(i / 3), style: $(`#pic${i} img`).attr("style") };
+            }
+            //移除一張
+            $("#pic0 img").remove();
+        }
+
+        //上傳圖片
+        //圖片上下左右元素是哪幾個
+        function BesideMe(i) {
+            col = divInd[i].col;
+            row = divInd[i].row;
+            besideDiv = [];
+            //上
+            if (row > 0) {
+                besideDiv.push(i - 3);
+            }
+            //下
+            if (row < 2) {
+                besideDiv.push(i + 3);
+            }
+            //左
+            if (col > 0) {
+                besideDiv.push(i - 1);
+            }
+            //右
+            if (col < 2) {
+                besideDiv.push(i + 1);
+            }
+        }
+        //附近的元素是否有空白
+        function CheckBlank(i) {
+            BesideMe(i);
+            for (q = 0; q < besideDiv.length; q++) {
+                let temp = besideDiv[q];
+                if ($(`#pic${temp}`).children().length == 0) {
+                    ChangePosition(q, i);
+                    break;
+                }
+            }
+        }
+        //換位置
+        function ChangePosition(q, i) {
+            let temp = besideDiv[q];//空白的index
+            let tempArray = [];
+            $(`#img${i}`).after($(`#img${temp}`));
+            /*tempArray[0]=divInd[temp];
+             divInd[temp]=divInd[i];
+             divInd[i]=tempArray[0];*/
+
+            $(`#pic${temp}`).append(`<img src="sanrio.jpg">`);
+            let tempCSS = $(`#pic${i} img`).attr("style");
+            let tempID = $(`#pic${i} img`).attr("style");
+            $(`#pic${temp} img`).attr("style", tempCSS);
+            $(`#pic${i} img`).remove();
+            CheckVictory();
+
+        }
+        //檢查勝利
+        function CheckVictory() {
+            let temp = 0;
+            for (i = 0; i < 9; i++) {
+                if ($(`#pic${i} img`).attr("style") == divInd[i].style) {
+                    temp += 1;
+                }
+            }
+            console.log(temp);
+            if (temp == 8) { alert("win"); }
+        }
+
+        //洗牌
+        function Shuffle() {
+            answer = "0";
+            while (answer.length < 5) {
+                var number = Math.floor(Math.random() * 5);
+                if (answer.indexOf(number) == -1) {
+                    let tempA = $(`#pic${answer[number-1]} img`).attr("style");
+                    $(`#pic${answer[number-1]} img`).attr("style", $(`#pic${answer[number]} img`).attr("style"));
+                    $(`#pic${answer[number]} img`).attr("style", tempA );
+                    answer += number;
+                }
+            }
+
+
+            /*for (w = 0; w < 20; w++) {
+                a = Math.floor(Math.random() * 9);
+                b = Math.floor(Math.random() * 9);
+                let tempA = $(`#pic${a} img`).attr("style");
+                $(`#pic${b} img`).attr("style", tempA);
+                $(`#pic${a} img`).attr("style", $(`#pic${b} img`).attr("style"));
+            }*/
+
+            /*answerList = [];
+            answerList.push();
+            for (i = 0; i < 9; i++) {
+                var a = Math.floor(Math.random() * 9);
+                for (w = 0; w < i; w++) {
+                    while (a == answerList[w]) {
+                        a = Math.floor(Math.random() * 9);
+                    }
+                }
+                answerList.push(a);
+            }*/
+
+
+
+
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <div id="contain" class="contain">
+
+    </div>
+</body>
+
+</html>
