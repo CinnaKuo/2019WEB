@@ -60,7 +60,7 @@
         //劃出div,顯示九張
         function DivMaker() {
             for (i = 0; i < 9; i++) {
-                $("#contain").append(`<div class='pic' id='pic${i}'><img src="sanrio.jpg"></div>`);
+                $("#contain").append(`<div class='pic' id='pic${i}'><img src="D:\\desktop\\bs2019git\\2019WEB\\js_hackthon\\sanrio.jpg"></div>`);
                 $(`#pic${i} img`).css({ 'margin-left': `${(i % 3) * (-160)}px`, 'margin-top': `${(Math.floor(i / 3)) * (-160)}px` });
                 //物件陣列塞位置
 
@@ -72,6 +72,7 @@
 
         //上傳圖片
         //圖片上下左右元素是哪幾個
+
         function BesideMe(i) {
             col = divInd[i].col;
             row = divInd[i].row;
@@ -109,10 +110,6 @@
             let temp = besideDiv[q];//空白的index
             let tempArray = [];
             $(`#img${i}`).after($(`#img${temp}`));
-            /*tempArray[0]=divInd[temp];
-             divInd[temp]=divInd[i];
-             divInd[i]=tempArray[0];*/
-
             $(`#pic${temp}`).append(`<img src="sanrio.jpg">`);
             let tempCSS = $(`#pic${i} img`).attr("style");
             let tempID = $(`#pic${i} img`).attr("style");
@@ -137,39 +134,14 @@
         function Shuffle() {
             answer = "0";
             while (answer.length < 9) {
-                var number = Math.floor(Math.random() * 5);
+                var number = Math.floor(Math.random() * 9);
                 if (answer.indexOf(number) == -1) {
-                    let tempA = $(`#pic${answer[number-1]} img`).attr("style");
-                    $(`#pic${answer[number-1]} img`).attr("style", $(`#pic${answer[number]} img`).attr("style"));
-                    $(`#pic${answer[number]} img`).attr("style", tempA );
+                    let tempA = $(`#pic${answer[number - 1]} img`).attr("style");
+                    $(`#pic${answer[number - 1]} img`).attr("style", $(`#pic${answer[number]} img`).attr("style"));
+                    $(`#pic${answer[number]} img`).attr("style", tempA);
                     answer += number;
                 }
             }
-
-
-            /*for (w = 0; w < 20; w++) {
-                a = Math.floor(Math.random() * 9);
-                b = Math.floor(Math.random() * 9);
-                let tempA = $(`#pic${a} img`).attr("style");
-                $(`#pic${b} img`).attr("style", tempA);
-                $(`#pic${a} img`).attr("style", $(`#pic${b} img`).attr("style"));
-            }*/
-
-            /*answerList = [];
-            answerList.push();
-            for (i = 0; i < 9; i++) {
-                var a = Math.floor(Math.random() * 9);
-                for (w = 0; w < i; w++) {
-                    while (a == answerList[w]) {
-                        a = Math.floor(Math.random() * 9);
-                    }
-                }
-                answerList.push(a);
-            }*/
-
-
-
-
         }
 
 
