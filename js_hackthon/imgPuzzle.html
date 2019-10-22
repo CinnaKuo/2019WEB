@@ -39,13 +39,7 @@
         var level = 3;
         $(function () {
             DivMaker();
-
-            $(`#gamestart`).click(function (e) {
-                level =parseInt(document.getElementById('inputLevel').value);
-                
-                DivMaker();
-                Shuffle();
-            });
+            startClick();
             divClick();
 
         })
@@ -55,6 +49,13 @@
                 console.log(i);
                 i = $("#contain>div").index($(this));
                 CheckBlank(i);
+            });
+        }
+        function startClick() {
+            $(`#gamestart`).click(function (e) {
+                level =parseInt(document.getElementById('inputLevel').value);  
+                DivMaker();
+                Shuffle();
             });
         }
 

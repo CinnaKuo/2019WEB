@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--jquery引用-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- bootstrap 4.3.1 -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--jquery table的css引用-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!--jquery table的js引用-->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <title>Calendar</title>
+    <script>
+        $(function () {
+            createHTML()
+        })
+
+    function createHTML(){
+        var titleBox=document.createElement("div");//標題div
+        var bodyBox=document.createElement("div");//日曆div
+        //標題div的HTML
+        titleBox.className="calendar-title-box";
+        titleBox.innerHTML=
+        "<span class='prev-month' id='prevMonth'>123</span><span class='calendar-title' id='calendarTitle'>456</span><span class='next-month' id='nextMonth'>789</span>";
+        $("#calendar").append(titleBox);
+        //表格div的HTML
+        bodyBox.className='calendar-body-box';
+        let headHTML=" <tr><th>Sunday</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th></tr>";
+        let bodyHTML="";
+        for(i=0;i<6;i++){
+            bodyHTML="<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+        }
+        bodyBox.innerHTML="<table id='calendarTable' class='calendar-table'>"+headHTML+bodyHTML+"</table>";
+        $("#calendar").append(bodyBox);
+    }
+    
+    
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class='calendar' id='calendar'></div>
+
+        </div>
+    </div>
+   
+
+</body>
+
+</html>
