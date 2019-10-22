@@ -41,7 +41,6 @@
             DivMaker();
             startClick();
             divClick();
-
         })
 
         function divClick() {
@@ -136,14 +135,14 @@
 
         //洗牌
         function Shuffle() {
-            answer = "0";
+            answer = []; 
             while (answer.length < (level * level)) {
                 var number = Math.floor(Math.random() * (level * level));
                 if (answer.indexOf(number) == -1) {
                     let tempA = $(`#pic${answer[number - 1]} img`).attr("style");
                     $(`#pic${answer[number - 1]} img`).attr("style", $(`#pic${answer[number]} img`).attr("style"));
                     $(`#pic${answer[number]} img`).attr("style", tempA);
-                    answer += number;
+                    answer.push( number);
                 }
             }
         }
