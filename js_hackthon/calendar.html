@@ -28,7 +28,7 @@
         /*設定日曆的大小*/
         .calendar {
             width: 100%;
-            height:100%;
+            height: 100%;
             display: block;
         }
 
@@ -84,7 +84,7 @@
         .calendar-table tr {
             height: 70px;
             line-height: 30px;
-            border:solid crimson 2px;
+            border: solid crimson 2px;
         }
 
         /* 當前天 顏色特殊顯示 */
@@ -103,16 +103,24 @@
         }
     </style>
     <script>
+        var date = new Date;
         $(function () {
-            createHTML();
-            createDate();
+            CreateHTML();
         })
+V1
 
-        var date=new Date;
-        function createDate(){
-        
+        function GetDate() {
+            date = Date();
+            return date;
         }
-        function createHTML() {
+
+       /* function SetDate(setDate) {
+            date = Date();
+            return date;
+        }*/
+
+
+        function CreateHTML() {
             var titleBox = document.createElement("div");//標題div
             var bodyBox = document.createElement("div");//日曆div
             //標題div的HTML
@@ -127,7 +135,7 @@
             for (i = 0; i < 6; i++) {
                 bodyHTML += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
             }
-            bodyBox.innerHTML = "<table id='calendarTable' class='calendar-table'>"+ headHTML + bodyHTML + "</table>";
+            bodyBox.innerHTML = "<table id='calendarTable' class='calendar-table'>" + headHTML + bodyHTML + "</table>";
             $("#calendar").append(bodyBox);
             console.log("createHTML()Done");
         }
