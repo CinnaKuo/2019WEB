@@ -23,7 +23,7 @@
         * {
             margin: 0px;
             padding: 0px;
-            
+
         }
 
         th {
@@ -41,7 +41,7 @@
 
         /* 當前天 顏色特殊顯示 */
         .currentDay {
-            color:black;
+            color: black;
         }
     </style>
     <script>
@@ -115,11 +115,11 @@
         }
 
         function createHTML() {
-            document.getElementById('calendar').innerHTML="";
+            document.getElementById('calendar').innerHTML = "";
             let bodyHTML = "";
-            let rowNum=(parseInt(cDay)+parseInt(nDay.getDate()))/7;
+            let rowNum = (parseInt(cDay) + parseInt(nDay.getDate())) / 7;
             console.log(rowNum);
-            for (i = 0; i <rowNum ; i++) {
+            for (i = 0; i < rowNum; i++) {
                 bodyHTML += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
             }
             $("#calendar").append(bodyHTML);
@@ -141,8 +141,8 @@
                 cTD[0].innerText = '';
                 setnDay();
             }
-            let tempnu=parseInt(tempLast)%7;
-            if ( tempnu!=0) {
+            let tempnu = parseInt(tempLast) % 7;
+            if (tempnu != 0) {
                 cTD[cTD.length - 1].innerText = '';
                 setNextMonth();
             }
@@ -160,7 +160,7 @@
         }
 
         function setNextMonth() {
-            if (cTD[cTD.length-1].innerText == '') {
+            if (cTD[cTD.length - 1].innerText == '') {
                 cTD[tempLast].innerText = tempInt;
                 tempLast++;
                 tempInt++;
@@ -178,8 +178,10 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-secondary text-light text-center">
-                <a class="btn bg-secondary btn-lg float-left" role="button" aria-disabled="false" id="prevMonth">&#10094;</a>
-                <a class="btn bg-secondary btn-lg float-left" role="button" aria-disabled="false" id="Activity">
+                <a class="btn bg-secondary btn-lg float-left" role="button" aria-disabled="false"
+                    id="prevMonth">&#10094;</a>
+                <a class="btn bg-secondary btn-lg float-left" role="button" aria-disabled="false" id="Activity"
+                    data-toggle="modal" data-target="#exampleModal">
                     <svg width="36" height="36" viewBox="0 0 36 36">
                         <path fill="#ffffff" d="M16 16v14h4V20z"></path>
                         <path fill="#ffffff" d="M30 16H20l-4 4h14z"></path>
@@ -189,7 +191,8 @@
                     </svg>
                 </a>
                 <span class="year h1" id="year">&emsp;</span>
-                <a class="btn bg-secondary btn-lg float-right" role="button" aria-disabled="false" id="nextMonth">&#10095;</a>
+                <a class="btn bg-secondary btn-lg float-right" role="button" aria-disabled="false"
+                    id="nextMonth">&#10095;</a>
             </div>
             <table class="table">
                 <thead class="thead-light text-center">
@@ -208,25 +211,31 @@
             </table>
         </div>
 
-        <div class="modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
+        <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                        <h5 class="modal-title" id="exampleModalLabel">新增活動</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="modal-body">
-                      <p>Modal body text goes here.</p>
+                    <div class="modal-body" >
+                        <p class="mt-2 mb-1">活動標題</p>
+                        <input type="text" class="w-100" name="actTitle"></input>
+                        <p class="mt-2 mb-1">開始時間</p>
+                        <input type="datetime-local" class="w-100" name="actTime"></input>
+                        <p class="mt-2 mb-1">活動內容</p>
+                        <textarea rows="5" cols="10" class="w-100" name="actContext"></textarea>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="actSave">新增</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
+        </div>
 
     </div>
 
