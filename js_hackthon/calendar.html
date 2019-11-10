@@ -45,7 +45,6 @@
         }
     </style>
     <script>
-        var Calendar = [];
         var now = new Date();
         var cYear = now.getFullYear();//年
         var cMonth = now.getMonth();//月
@@ -60,6 +59,8 @@
         var tempcDay;
         var tempLast;
         var tempInt;
+        var actList = [];
+        var dat = [];
 
         function setPar() {
             cFirstDay = new Date(cYear, cMonth, 1);//當月第一日
@@ -82,14 +83,23 @@
                 setLastPar();
                 createHTML();
                 setCalendar();
-                console.log('重新設置完成' + cMonth);
+                reloadPage();
             });
 
             $('#nextMonth').click(function (e) {
                 setNextPar();
                 createHTML();
                 setCalendar();
-                console.log('重新設置完成' + cMonth);
+                reloadPage();
+            });
+
+            $('#actSave').click(function (e) {
+                saveAct();//存檔
+                reloadPage();
+            });
+
+            $('#actClear').click(function (e) {
+                clearAll();
             });
         })
 
@@ -113,7 +123,6 @@
             }
             setPar();
         }
-
         function createHTML() {
             document.getElementById('calendar').innerHTML = "";
             let bodyHTML = "";
@@ -149,7 +158,6 @@
 
 
         }
-
         function setnDay() {
             if (cTD[0].innerText == '') {
                 cTD[tempBlank].innerText = tempDay;
@@ -158,7 +166,6 @@
                 setnDay();
             }
         }
-
         function setNextMonth() {
             if (cTD[cTD.length - 1].innerText == '') {
                 cTD[tempLast].innerText = tempInt;
@@ -168,8 +175,60 @@
             }
         }
 
+        class actInfor {
+            constructor() {
+                this.actTitle = "",
+                    this.actYear = "",
+                    this.actMonth = "",
+                    this.actDay = "",
+                    this.actTime = "",
+                    this.actContext = ""
+            }
+        }
 
-
+        function saveAct() {
+            let temp = new actInfor();
+            temp.actTitle = $("#actTitle").val();
+            console.log($("#actDate").val());
+            temp.actYear = parseInt($("#actDate").val().substring(0, 4));
+            temp.actMonth = parseInt($("#actDate").val().substring(5, 7));
+            temp.actDay = parseInt($("#actDate").val().substring(8, 10));
+            temp.actTime = $("#actTime").val();
+            temp.actContext = $("#actContext").val();
+            console.log(temp.actTitle + temp.actYear + temp.actMonth + temp.actday);
+            actList.push(temp);
+            var str = JSON.stringify(actList); //把dat資料json化
+            console.log(str);
+            localStorage.setItem('Avtivity', str);//存到本機
+        }
+        function loadAct() {
+            if (localStorage.getItem('Avtivity') != null) {
+                var str = localStorage.getItem('Avtivity'); //拿到存進去的json資料
+                dat = JSON.parse(str);//轉成文字
+                console.log(dat);
+            }
+        }
+        function refreshAct() {
+            for (i = 0; i < dat.length; i++) {
+                if (document.getElementById('year').innerText == dat[i].actYear + '年' + dat[i].actMonth + '月') {
+                    for (w = 0; w < cTD.length; w++) {
+                        if (cTD[w].innerText == dat[i].actDay) {
+                            let temp = document.createElement("div");
+                            temp.innerHTML = "<p>" + dat[i].actTitle + "</p>" + "<p>" + dat[i].actDate + "</p>";
+                            cTD[w].appendChild(temp);
+                        }
+                    }
+                }
+            }
+        }
+        function reloadPage() {
+            loadAct();
+            refreshAct();
+        }
+        function clearAll() {
+            let clearAll = "";
+            localStorage.setItem('Avtivity', clearAll);
+        }
 
     </script>
 </head>
@@ -187,6 +246,15 @@
                         <path fill="#ffffff" d="M30 16H20l-4 4h14z"></path>
                         <path fill="#ffffff" d="M6 16v4h10l4-4z"></path>
                         <path fill="#ffffff" d="M20 16V6h-4v14z"></path>
+                        <path fill="none" d="M0 0h36v36H0z"></path>
+                    </svg>
+                </a>
+                <a class="btn bg-secondary btn-lg float-left" role="button" aria-disabled="false" id="actClear">
+                    <svg width="36" height="36" viewBox="0 0 36 36">
+                        <!--<path fill="#ffffff" d="M16 16v14h4V20z"></path>下-->
+                        <path fill="#ffffff" d="M30 16H20l-4 4h14z"></path>
+                        <path fill="#ffffff" d="M6 16v4h10l4-4z"></path>
+                        <!--<path fill="#ffffff" d="M20 16V6h-4v14z"></path>上-->
                         <path fill="none" d="M0 0h36v36H0z"></path>
                     </svg>
                 </a>
@@ -211,7 +279,7 @@
             </table>
         </div>
 
-        <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -221,17 +289,18 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
                         <p class="mt-2 mb-1">活動標題</p>
-                        <input type="text" class="w-100" name="actTitle"></input>
+                        <input type="text" class="w-100" name="actTitle" id="actTitle"></input>
                         <p class="mt-2 mb-1">開始時間</p>
-                        <input type="datetime-local" class="w-100" name="actTime"></input>
+                        <input type="date" class="w-50" name="actDate" id="actDate"></input>
+                        <input type="time" name="usr_time" id="actTime">
                         <p class="mt-2 mb-1">活動內容</p>
-                        <textarea rows="5" cols="10" class="w-100" name="actContext"></textarea>
+                        <textarea rows="5" cols="10" class="w-100" name="actContext" id="actContext"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="actSave">新增</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="actCancel">取消</button>
                     </div>
                 </div>
             </div>
