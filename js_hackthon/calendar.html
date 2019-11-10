@@ -194,6 +194,10 @@
             temp.actMonth = parseInt($("#actDate").val().substring(5, 7));
             temp.actDay = parseInt($("#actDate").val().substring(8, 10));
             temp.actTime = $("#actTime").val();
+            if(temp.actTime==undefined)
+            {
+                temp.actTime="";
+            }
             temp.actContext = $("#actContext").val();
             console.log(temp.actTitle + temp.actYear + temp.actMonth + temp.actday);
             actList.push(temp);
@@ -214,7 +218,7 @@
                     for (w = 0; w < cTD.length; w++) {
                         if (cTD[w].innerText == dat[i].actDay) {
                             let temp = document.createElement("div");
-                            temp.innerHTML = "<p>" + dat[i].actTitle + "</p>" + "<p>" + dat[i].actDate + "</p>";
+                            temp.innerHTML = "<p>" + dat[i].actTitle + "</p>" + "<p>" + dat[i].actTime + "</p>";
                             cTD[w].appendChild(temp);
                         }
                     }
