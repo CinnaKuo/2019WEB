@@ -37,33 +37,49 @@
     <script>
         var divInd = [];
         var level = 3;
+        var shuffle = false;
+        var picSrc = "sanrio2.jpg";
+        var start = false;
         $(function () {
             DivMaker();
             startClick();
             divClick();
+            changePic();
         })
 
         function divClick() {
             $(`#contain>div`).click(function (e) {
                 console.log(i);
                 i = $("#contain>div").index($(this));
-                CheckBlank(i);
+                if (start) {
+                    CheckBlank(i);
+                }
             });
         }
         function startClick() {
             $(`#gamestart`).click(function (e) {
-                level =parseInt(document.getElementById('inputLevel').value);  
+                start = true;
                 DivMaker();
                 Shuffle();
             });
         }
+        function changePic() {
+            $(`#actSave`).click(function (e) {
+                picSrc = $(`#actTitle`).val();
+                start = false;
+                DivMaker();
+
+            });
+        }
+
 
         //劃出div,顯示九張
         function DivMaker() {
+            level = parseInt(document.getElementById('inputLevel').value);
             $("#contain").html("");
             for (i = 0; i < (level * level); i++) {
                 $("#contain").append(`<div class='pic' id='pic${i}' style="width: ${480 / level - 2}px;
-            height: ${480 / level - 2}px;"><img src="sanrio.jpg"></div>`);
+            height: ${480 / level - 2}px;"><img src=${picSrc}></div>`);
                 $(`#pic${i} img`).css({ 'margin-left': `${(i % level) * (-480 / level)}px`, 'margin-top': `${(Math.floor(i / level)) * (-480 / level)}px` });
                 //物件陣列塞位置
 
@@ -87,7 +103,7 @@
                 besideDiv.push(i - level);
             }
             //下
-            if (row < level-1) {
+            if (row < level - 1) {
                 besideDiv.push(i + level);
             }
             //左
@@ -95,7 +111,7 @@
                 besideDiv.push(i - 1);
             }
             //右
-            if (col < level-1) {
+            if (col < level - 1) {
                 besideDiv.push(i + 1);
             }
         }
@@ -113,13 +129,15 @@
         //換位置
         function ChangePosition(q, i) {
             let temp = besideDiv[q];//空白的index
-            $(`#pic${temp}`).append(`<img src="sanrio.jpg">`);
+            $(`#pic${temp}`).append(`<img src=${picSrc}>`);
             //$(`#img${i}`).after($(`#img${temp}`));
             let tempCSS = $(`#pic${i} img`).attr("style");
             //let tempID = $(`#pic${i} img`).attr("style");
             $(`#pic${temp} img`).attr("style", tempCSS);
             $(`#pic${i} img`).remove();
-            CheckVictory();
+            if (shuffle == false) {
+                CheckVictory();
+            }
 
         }
         //檢查勝利
@@ -135,35 +153,57 @@
 
         //洗牌
         function Shuffle() {
-            answer = []; 
-            while (answer.length < (level * level)) {
-                var number = Math.floor(Math.random() * (level * level));
-                if (answer.indexOf(number) == -1) {
-                    let tempA = $(`#pic${answer[number - 1]} img`).attr("style");
-                    $(`#pic${answer[number - 1]} img`).attr("style", $(`#pic${answer[number]} img`).attr("style"));
-                    $(`#pic${answer[number]} img`).attr("style", tempA);
-                    answer.push( number);
-                }
+            console.log("level是" + level + "開始洗牌");
+            for (z = 1; z < 800; z++) {
+                $(`#pic${Math.floor(Math.random() * (level * level + 1))}`).click();
+                shuffle = true;
             }
+            shuffle = false;
         }
+
     </script>
 </head>
 
 <body>
     <div class="row">
-        <div id="contain" class="contain">
+        <div class="col"></div>
+        <div class="col">
+            <div id="contain" class="contain"></div>
+            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+                <span class="label my-2">等級</span>
+                <select name="Level" id="inputLevel" class="form-control  my-2" onchange="DivMaker()">
+                    <option value="3" selected>簡單 3x3</option>
+                    <option value="4">中等 4x4</option>
+                    <option value="5">困難 5x5</option>
+                </select>
+                <input name="gamestart" id="gamestart" class="btn btn-primary  my-2" type="button" value="開始">
+                <input name="changePic" id="changePic" class="btn btn-primary  my-2" type="button" value="更換圖片"
+                    data-toggle="modal" data-target="#exampleModal">
+            </div>
 
         </div>
+        <div class="col"></div>
     </div>
-    <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
-        <span class="label my-2">等級</span>
-        <select name="Level" id="inputLevel" class="form-control  my-2">
-            <option value="3" selected>簡單 3x3</option>
-            <option value="4">中等 4x4</option>
-            <option value="5">困難 5x5</option>
-        </select>
-        <input name="gamestart" id="gamestart" class="btn btn-primary  my-2" type="button" value="開始">
-    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">輸入圖片網址</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="w-100" name="actTitle" id="actTitle"></input>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="actSave">新增</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="actCancel">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 </body>
