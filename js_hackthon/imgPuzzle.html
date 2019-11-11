@@ -45,6 +45,7 @@
             startClick();
             divClick();
             changePic();
+            originPic();
         })
 
         function divClick() {
@@ -71,6 +72,16 @@
 
             });
         }
+        function originPic() {
+            $(`#originPic`).click(function (e) {
+                picSrc = "sanrio2.jpg";
+                start = false;
+                DivMaker();
+
+            });
+        }
+
+
 
 
         //劃出div,顯示九張
@@ -179,6 +190,7 @@
                 <input name="gamestart" id="gamestart" class="btn btn-primary  my-2" type="button" value="開始">
                 <input name="changePic" id="changePic" class="btn btn-primary  my-2" type="button" value="更換圖片"
                     data-toggle="modal" data-target="#exampleModal">
+                <input name="originPic" id="originPic" class="btn btn-primary  my-2" type="button" value="預設圖片">
             </div>
 
         </div>
@@ -198,7 +210,7 @@
                 <div class="modal-body">
                     <input type="text" class="w-100" name="actTitle" id="actTitle"></input>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="actSave">新增</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="actSave">新增</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="actCancel">取消</button>
                     </div>
                 </div>
