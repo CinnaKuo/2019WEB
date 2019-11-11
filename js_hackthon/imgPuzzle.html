@@ -46,6 +46,7 @@
             divClick();
             changePic();
             originPic();
+            getImgSize();
         })
 
         function divClick() {
@@ -69,7 +70,6 @@
                 picSrc = $(`#actTitle`).val();
                 start = false;
                 DivMaker();
-
             });
         }
         function originPic() {
@@ -77,12 +77,8 @@
                 picSrc = "sanrio2.jpg";
                 start = false;
                 DivMaker();
-
             });
         }
-
-
-
 
         //劃出div,顯示九張
         function DivMaker() {
@@ -172,6 +168,20 @@
             shuffle = false;
         }
 
+        function answerPic(h,w) {
+            let wid = w/480;
+            let hei =h/480;
+            $("#pic").attr({ width: wid+"%", height: hei+"%", overflow: "hidden" })
+        }
+
+        function getImgSize() {
+            let newImg = new Image();
+            newImg.src = picSrc;
+            let height = newImg.height;
+            let width = newImg.width;
+            answerPic(height,width)
+        }
+
     </script>
 </head>
 
@@ -179,8 +189,8 @@
     <div class="row">
         <div class="col"></div>
         <div class="col">
-            <div id="contain" class="contain"></div>
-            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+            <div id="contain" class="contain mt-2"></div>
+            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center ">
                 <span class="label my-2">等級</span>
                 <select name="Level" id="inputLevel" class="form-control  my-2" onchange="DivMaker()">
                     <option value="3" selected>簡單 3x3</option>
@@ -192,6 +202,10 @@
                     data-toggle="modal" data-target="#exampleModal">
                 <input name="originPic" id="originPic" class="btn btn-primary  my-2" type="button" value="預設圖片">
             </div>
+            <div class='pic' style="width: 150px;height: 150px">
+                <img id="answer" src="sanrio2.jpg">
+            </div>
+
 
         </div>
         <div class="col"></div>
