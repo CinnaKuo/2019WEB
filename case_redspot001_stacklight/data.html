@@ -17,6 +17,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
   <style>
     .redlight {
@@ -38,6 +39,58 @@
 
     }
   </style>
+  <script>
+    window.onload = function () {
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        title: {
+          text: "Hourly Average CPU Utilization"
+        },
+        axisX: {
+          title: "Time"
+        },
+        axisY: {
+          title: "Percentage",
+          suffix: "%"
+        },
+        data: [{
+          type: "line",
+          name: "CPU Utilization",
+          connectNullData: true,
+          //nullDataLineDashType: "solid",
+          xValueType: "dateTime",
+          xValueFormatString: "DD MMM hh:mm TT",
+          yValueFormatString: "#,##0.##\"%\"",
+          dataPoints: [
+            { x: 1501048673000, y: 35.939 },
+            { x: 1501052273000, y: 40.896 },
+            { x: 1501055873000, y: 56.625 },
+            { x: 1501059473000, y: 26.003 },
+            { x: 1501063073000, y: 20.376 },
+            { x: 1501066673000, y: 19.774 },
+            { x: 1501070273000, y: 23.508 },
+            { x: 1501073873000, y: 18.577 },
+            { x: 1501077473000, y: 15.918 },
+            { x: 1501081073000, y: null }, // Null Data
+            { x: 1501084673000, y: 10.314 },
+            { x: 1501088273000, y: 10.574 },
+            { x: 1501091873000, y: 14.422 },
+            { x: 1501095473000, y: 18.576 },
+            { x: 1501099073000, y: 22.342 },
+            { x: 1501102673000, y: 22.836 },
+            { x: 1501106273000, y: 23.220 },
+            { x: 1501109873000, y: 23.594 },
+            { x: 1501113473000, y: 24.596 },
+            { x: 1501117073000, y: 31.947 },
+            { x: 1501120673000, y: 31.142 }
+          ]
+        }]
+      });
+      chart.render();
+
+    }
+  </script>
 
 </head>
 
@@ -54,10 +107,10 @@
 
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
+        <li class="nav-item ">
           <a class="nav-link" href="#">三色燈 <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" href="#">當日報表</a>
         </li>
         <li class="nav-item">
@@ -68,14 +121,12 @@
   </nav>
   <div class="container-fluid justify-content-center">
     <div class="row mt-3 justify-content-center ">
-      <h5>目前共有x台機器</h5><span>
-        <a href="#" class="card-link"><img src="icons8-add-property-80.png" alt="..." class="float-left ml-4"
-            style="height: 30px;width: 30px;"></a></span>
+      <h5>各機台報表　　日期：<input type="date"></h5>
     </div>
     <div class="row mt-3 justify-content-center ">
       <div class="card col-lg-3 col-sm-9 ml-3 mb-5" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">XXX機器<span class="badge badge-danger float-right text-danger">new</span></h5>
+          <h5 class="card-title">XXX機器</h5>
           </h5>
           <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
             content.</p>-->
@@ -84,39 +135,16 @@
           <li class="list-group-item">管理人員：<span>James</span></a></li>
           <li class="list-group-item">當日稼動率:<a href="#" class="card-link"></a></li>
           <li class="list-group-item">現在狀態:</a></li>
-          <li class="list-group-item">XX產線:</li>
-          <li class="list-group-item">
-
           </li>
         </ul>
+        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
         <div class="list-group-item" style="border: none;">
-          <a href="#" class="card-link"><img src="icons8-delete-trash-24.png" alt="..." class="float-right "></a>
-          <a href="#" class="card-link"><img src="icons8-edit-26.png" alt="..." class="float-right  mr-3"></a>
-          <a href="#" class="card-link"><img src="icons8-add-30.png" alt="..." class="float-right  mr-3"></a>
         </div>
       </div>
 
     </div>
   </div>
-  <div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>用js寫一個功能：根據list行數新增input個數</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">儲存</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
 </body>
 
