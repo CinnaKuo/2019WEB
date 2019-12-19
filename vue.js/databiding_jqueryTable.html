@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+        <!--jquery引用-->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!--jquery table的css引用-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!--jquery table的js引用-->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <!--bootstrape的css引用-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--bootstrape的js引用-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    
+    <title>Document</title>
+</head>
+<script>
+//var a=0;
+
+var json =
+    {
+        "items": [
+            {
+                "ID": 3,
+                "title": "總裁", "name": "Eric", "PictureURL": "https://i.imgur.com/uxvy97n.png"
+                , "Phone": "0912345678",
+                "Address": "新竹市大同區二三五路四號六樓",
+                "Memo": "澳洲來的人", "isValid": true
+            },
+            {
+                ID: 4,
+                title: "瑪農", name: "David", PictureURL: "https://i.imgur.com/qsQcoGh.png", Phone: "0987654321",
+                Address: "台北市信義區忠孝東路231號3樓",
+                Memo: "充滿活力的廉價勞工", isValid: true
+            },
+            {
+                ID: 5,
+                title: "Boss", name: "Amy", PictureURL: "https://i.imgur.com/dfww1JX.png", Phone: "0912121121",
+                Address: "高雄市仁義區六六路3號23樓",
+                Memo: "小資女", isValid: true
+            }
+        ]
+    };
+
+    var model1;
+function binding()
+{
+    new Vue(
+        {
+            el:'#table1',
+            data:json,
+            methods:{
+                Delete:function(item){
+                    console.log(this.$data.items);
+                    item.isValid=!item.isValid;
+                }
+            }
+        }
+    )
+}
+
+
+
+
+$(document).ready(function () {
+    binding();
+});
+
+</script>
+
+<body>
+   <!--選單-->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="text-align: center">
+    <a class="navbar-brand ml-4" href="#">個人通訊錄</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item  mr-2">
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addModal">新增</button>
+            </li>
+            <li class="nav-item ">
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ModalDataInport"
+                    id="btnIn">匯入</button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ModalDataExport"
+                    id="btnEx">匯出</button>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+</br>
+</br>
+<!--主要顯示區-->
+<div class="container-fluid">
+    <div class="row" style="margin: 10px">
+        <div class="col-md-12">
+            <table id="table1" class="display">
+                <thead>
+                    <tr>
+                        <th>狀態</th>
+                        <th>姓名</th>
+                        <th>生日</th>
+                        <th>電話</th>
+                        <th>Email</th>
+                        <th>地址</th>
+                    </tr>
+                </thead>
+                <tbody v-for="item in items">
+                    <tr>
+                        <td v-if="item.isValid"  v-on:click="Delete(item)">已刪除</td>
+                        <td v-else  v-on:click="Delete(item)"><button >刪除</button></td>
+                        <td >{{item.title}}</td>
+                        <td >{{item.name}}</td>
+                        <td >{{item.Phone}}</td>
+                        <td >{{item.Address}}</td>
+                        <td >{{item.Memo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 
+</body>
+</html>

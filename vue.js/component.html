@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <title>Document</title>
+</head>
+<script>
+
+function binding()
+{
+    new Vue(
+        {
+            el:'#block1',
+       
+        }
+    )
+}
+function  DefineComponent()
+{
+    Vue.component('my-component',{
+        template:'#my-component'
+    });
+}
+
+$(document).ready(function () {
+    DefineComponent();
+    binding();
+    
+
+});
+
+</script>
+
+<body>
+    <div id="block1">
+        <div id='my-component'><label>欄位名稱</label><input class="form-control" type="text" value="123"></div>
+<my-component></my-component>
+<my-component></my-component>
+    </div>
+  
+</body>
+</html>

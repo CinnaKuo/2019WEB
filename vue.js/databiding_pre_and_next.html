@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<script>
+    //var a=0;
+    var jsonForm = {};
+    
+
+    var person1 = {
+        ID: 1, title: "總裁", name: "Eric",
+        PictureURL: "https://images.chinatimes.com/newsphoto/2018-10-04/900/20181004004998.jpg",
+        Phone: "0912345678",
+        Address: "新竹市大同區二三五路四號六樓",
+        Memo: "澳洲來的人",
+        isValid: true
+    }
+    var person2 = {
+        ID: 2, title: "總裁", name: "Eric",
+        PictureURL: "https://images.chinatimes.com/newsphoto/2018-10-04/900/20181004004998.jpg",
+        Phone: "0912345678",
+        Address: "新竹市大同區二三五路四號六樓",
+        Memo: "澳洲來的人",
+        isValid: true
+    }
+    var person3 = {
+        ID: 3, title: "總裁", name: "Eric",
+        PictureURL: "https://images.chinatimes.com/newsphoto/2018-10-04/900/20181004004998.jpg",
+        Phone: "0912345678",
+        Address: "新竹市大同區二三五路四號六樓",
+        Memo: "澳洲來的人",
+        isValid: false
+    }
+    var all=[person1,person2,person3];
+    var vueitem;
+
+    function binding() {
+    new Vue(
+            {
+                el: '#block1',
+                data: {
+                    items: all                     
+                }
+            }
+        )
+    }
+    function binding2() {
+        vueitem=new Vue(
+            {
+                el: '#block2',
+                data: {
+                    item: all[0]                     
+                }
+            }
+        )
+    }
+
+    var index=0;
+
+
+    function prev()
+    {
+        $("#btn1").click(function (e) { 
+            if (index==0)
+            {
+                index=all.length-1; 
+            }
+            else
+            {
+                index--; 
+            }
+
+            vueitem.$data.item=all[index];
+                     
+        });  
+    }
+
+    function next()
+    {
+        $("#btn2").click(function (e) { 
+            if ( index==all.length-1)
+            {
+                index=0; 
+            }
+            else
+            {
+                index++; 
+            }     
+            vueitem.$data.item=all[index]    
+        });
+    }
+
+
+    $(document).ready(function () {
+        binding2();
+        binding();
+        prev();
+        next();
+        
+    });
+
+</script>
+
+<body>
+        <div class="container" style="background: green;height: 500px;width: 400px;;">
+                <div id="block2">
+                    <span v-if="item.isValid"></span>
+                    <span v-else>已刪除</span>
+                        <div class="row">ID:{{item.ID}}</div>
+                        <div class="row"><span>title: </span> <input v-model="item.title"></div>
+                        <div style="height: 100px;"><img style="height: 100%;" v-bind:src="item.PictureURL"></div>
+                        <div class="row"><span>name: </span> <input v-model="item.name"></div>
+                        <div class="row"><span>Phone: </span> <input v-model="item.Phone"></div>
+                        <div class="row"><span> Address: </span> <input v-model="item.Address"></div>
+                        <div class="row"><span> Memo: </span> <input v-model="item.Memo"></div>
+                        <div class="row">
+                            <button id="btn1" type="button" class="btn-dark">previous</button>
+                            <button id="btn2" type="button" class="btn-dark">next</button>
+                        </div>
+                </div>
+        
+            </div>
+    <div class="container" style="background: coral;height: 500px;width: 400px;;">
+        <div id="block1">
+            <div v-for="item in items">
+                <div class="row">ID:{{item.ID}}</div>
+                <div class="row"><span>title: </span> <input v-model="item.title"></div>
+                <div style="height: 100px;"><img style="height: 100%;" v-bind:src="item.PictureURL"></div>
+                <div class="row"><span>name: </span> <input v-model="item.name"></div>
+                <div class="row"><span>Phone: </span> <input v-model="item.Phone"></div>
+                <div class="row"><span> Address: </span> <input v-model="item.Address"></div>
+                <div class="row"><span> Memo: </span> <input v-model="item.Memo"></div>
+                <div class="row">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
