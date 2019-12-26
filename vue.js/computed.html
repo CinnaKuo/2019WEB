@@ -30,8 +30,73 @@ function binding()
     )
 }
 
+function binding2()
+{
+    new Vue(
+        {
+            el:'#block2',
+            data:{weight:0,height:0},
+            computed:{
+                bmi:function(){
+                    let test=this.weight/((this.height/100)*(this.height/100));
+                    return test;
+                    
+                }
+            }
+       
+        }
+    )
+}
+
+function binding3()
+{
+    new Vue(
+        {
+            el:'#block3',
+            data:{WithoutTax:0},
+            computed:{
+                WithTax:{
+                    get:function(){
+                       return this.WithoutTax*1.05;
+                    },
+                    set: function(data){
+                       this.WithoutTax=data/1.05;
+                       console.log(this.WithoutTax);
+                    }              
+                }
+            }
+       
+        }
+    )
+}
+
+function binding4()
+{
+    new Vue(
+        {
+            el:'#block4',
+            data:{color:"#880000"},      
+        }
+    )
+}
+
+Vue.directive("bgcolor",{
+    bind:function(el,binding)
+    {
+        el.style.backgroundColor=binding.value;
+    },
+    update:function(el,binding)
+    {
+        el.style.backgroundColor=binding.value;
+    }
+
+})
+
 $(document).ready(function () {
     binding();
+    binding2();
+    binding3();
+    binding4();
 });
 
 </script>
@@ -43,6 +108,42 @@ $(document).ready(function () {
             <br />
             <input v-model="number"><br />
             <label>1 +...+ {{number}} = {{result}}</label>
+        </div>
+    </div>
+    <div id="block2" class="row" style="margin: 10px">  
+        <div class="col-6">
+            <label>身高: </label>
+            <br />
+            <input v-model="height"><br />
+
+            <label>體重: </label>
+            <br />
+            <input v-model="weight"><br />
+            
+            <label>BMI: {{bmi}}</label>
+        </div>
+    </div>
+
+    <div id="block3" class="row" style="margin: 10px">  
+        <div class="col-6">
+            <label>未稅價格: </label>
+            <br />
+            <input v-model="WithoutTax"><br />
+
+            <label>含稅價格: </label>
+            <br />
+            <input v-model="WithTax"><br />
+        </div>
+    </div>
+    <div id="block4" class="row" style="margin: 10px">  
+        <div class="col-6">
+            <label>背景顏色 </label>
+            <br />
+            <input v-model="color"><br />
+
+            <label>顏色: </label>
+            <br />
+            <input v-bgcolor="color"><br />
         </div>
     </div>
   
