@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!--jquery table的css引用-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!--jquery table的js引用-->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <style>
+        .redlight {
+            background-color: red;
+        }
+
+        .greenlight {
+            background-color: green;
+        }
+
+        .yelowlight {
+            background-color: yellow;
+        }
+
+        #stacklight div {
+            height: 100px;
+            width: 100px;
+            float: left;
+
+        }
+    </style>
+    <script>
+        //預設資料
+
+        var dat = [];
+        //call API
+        function GetRawData() {
+            $.ajax({
+                type: "GET",
+                url: "https://virtserver.swaggerhub.com/jameschnbass/RedDot/1.0.0/assemblylines",
+
+                success: function (rawdata) {
+                    console.log('rawdata', rawdata);
+
+                    for (i = 0; i < rawdata.length; i++) {
+                        let tempData = [];
+                        tempData.push(rawdata[i].id);
+                        tempData.push(rawdata[i].name);
+                        tempData.push(rawdata[i].stamptime.toString());
+                        tempData.push(rawdata[i].status);
+                        dat.push(tempData);
+                    }
+                    mytable1 = $('#table1').DataTable(
+                        { data: dat } //data這個屬性值去抓dat的資料
+                    );
+                    ChangeColor();
+                }
+            });
+        }
+
+
+        function ChangeColor() {
+            var table = document.getElementById("table1");
+            var len = table.rows.length;
+            console.log(len);
+            var _row = table.rows;
+            for (var i = 0; i < len; i++) {
+                var _cell = _row[i].cells;
+                var d = _cell[3].innerHTML;
+                table.rows[i].cells[3].style.width="100px";
+                if (d =='Run') {
+                    table.rows[i].cells[3].style.backgroundColor = "green";
+                }
+                else if (d =='Error') {
+                    table.rows[i].cells[3].style.backgroundColor = "red";
+                }
+                else if (d =='Wait'){
+                    table.rows[i].cells[3].style.backgroundColor = "yellow";
+                }
+            }
+
+        }
+        $(document).ready(function () {
+            GetRawData();
+            
+        });
+
+        function RefreshData() {
+            mytable1.clear(); //DataTable裡面的方法
+            mytable1.rows.add(dat);
+            mytable1.draw();
+        }
+        //儲存資料
+        function SaveData() {
+            var str = JSON.stringify(dat); //把dat資料json化
+            localStorage.setItem('AddressBook', str);//存到本機
+        }
+
+        //載入資料
+        function LoadData() {
+            if (localStorage.getItem('AddressBook') != null) {
+                var str = localStorage.getItem('AddressBook'); //拿到存進去的json資料
+                dat = JSON.parse(str);//轉成文字
+            }
+            RefreshData();
+        }
+
+
+
+
+    </script>
+</head>
+
+<body>
+    <!--選單-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">紅點軟體</a>
+        <span class="navbar-text">
+            所有功能為您量身打造
+        </span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active ">
+                    <a class="nav-link"
+                        href="https://cinna2019web.azurewebsites.net/case_redspot001_stacklight/stacklight.html">三色燈
+                        <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link"
+                        href="https://cinna2019web.azurewebsites.net/case_redspot001_stacklight/data.html">當日報表</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Raw Data</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    </br>
+    </br>
+    <!--主要顯示區-->
+    <div class="container-fluid">
+        <div class="row" style="margin: 10px">
+            <div class="col-md-12">
+                <table id="table1" class="display">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>stamptime</th>
+                            <th>status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
